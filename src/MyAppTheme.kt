@@ -1,3 +1,4 @@
+//Enumeration Example
 enum class MyAppTheme {
     DARK {
         override fun getPrimaryColor() = "#000ff0"
