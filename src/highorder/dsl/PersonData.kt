@@ -1,4 +1,4 @@
-package highorder.people
+package highorder.dsl
 
 class PersonData {
     fun printData() {
