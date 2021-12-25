@@ -46,7 +46,7 @@ class AdvGuru {
 * 0. Maps usage with infix Eg. to
 * 1. <T> custom function with eg. list<T> & make that as infix & simple operator
 * 2. Custom lambda like our with references lambda with receiver
-* 3. DSL -- Domain Specifc Language
+* 3. DSL -- Domain Specific Language
 * 4. 
 * */
 

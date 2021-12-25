@@ -1,7 +1,6 @@
 import java.text.DateFormat
 import java.text.SimpleDateFormat
 import java.util.*
-import kotlin.collections.ArrayList
 
 
 //@file:JvmName("Gurunath")
@@ -654,9 +653,40 @@ fun main(ar: Array<String>) {
      val length: Int = username!!.length ?: 0
      println("Length is $length")*/
 
- /*   val property = Singleton.property1
-    val info = Singleton.info
-    println("$property - $info")*/
+    /*   val property = Singleton.property1
+       val info = Singleton.info
+       println("$property - $info")*/
+
+
+  /*  val diaLab = listOf(
+        Diagnosis("H1", "SH1"), Diagnosis("H1", "SH2"), Diagnosis("H2", "SH1"), Diagnosis("H2", "SH2")
+    )
+    val dataGroup = groupByParentName(diaLab)
+    dataGroup.forEach {
+        println("Parent: ${it.key}")
+        println("Items: \n${it.value listToStrWithSeparator "\n"}")
+    }
+    test(diaLab, ::output, groupByParentName)*/
+}
+
+inline fun test(
+    data: List<Diagnosis>,
+    output: (Map<String, List<String>>) -> Unit,
+    gByName: (List<Diagnosis>) -> Map<String, List<String>>
+) = output(gByName(data))
+
+data class Diagnosis(val heading: String, val subHeading: String)
+
+val groupByParentName by lazy { { digLab: List<Diagnosis> -> digLab.groupBy({ it.heading }, { it.subHeading }) } }
+
+fun groupByParent(digLab: List<Diagnosis>) = digLab.groupBy({ it.heading }, { it.subHeading })
+
+infix fun List<String>.listToStrWithSeparator(separator: String) = this.joinToString(separator)
+
+fun output(out: Map<String, List<String>>) {
+    out.forEach {
+        println("${it.key} || ${it.value.listToStrWithSeparator("-")}")
+    }
 }
 
 
@@ -673,16 +703,20 @@ data.forEach {
 println("Done")*/
 
 fun getCurrentTimeStamp() =
-        SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'").format(Calendar.getInstance().time)
+    SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'").format(Calendar.getInstance().time)
 
 const val ISO_DATE_TIME_FORMAT_1 = "yyyy-MM-dd'T'HH:mm:ss'Z'"
 const val ISO_DATE_TIME_FORMAT_2 = "YYYY-MM-DD'T'hh:mm:ss'TZD'"
 
-fun getCurrentDateUTC(timeZoneValue: String = "UTC", format: String = ISO_DATE_TIME_FORMAT_1, locale: Locale = Locale.US): String? {
+fun getCurrentDateUTC(
+    timeZoneValue: String = "UTC",
+    format: String = ISO_DATE_TIME_FORMAT_1,
+    locale: Locale = Locale.US
+): String? {
     var result: String? = null
     try {
         val mISODateTimeFormatted: DateFormat =
-                SimpleDateFormat(format, locale)
+            SimpleDateFormat(format, locale)
         mISODateTimeFormatted.timeZone = TimeZone.getTimeZone(timeZoneValue)
         result = mISODateTimeFormatted.format(Date())
     } catch (e: Exception) {
@@ -741,12 +775,12 @@ fun testXLambda1(y: Int, paramLam: (Int, Int) -> String) = paramLam(y, y)
 
 
 data class TestDataClass(
-        val id: String,
-        val name: String,
-        val city: Array<String>,
-        val state: String = "TN",
-        val isDone: Boolean = false,
-        val pro: Int = 100
+    val id: String,
+    val name: String,
+    val city: Array<String>,
+    val state: String = "TN",
+    val isDone: Boolean = false,
+    val pro: Int = 100
 ) {
 
 }
@@ -768,10 +802,10 @@ fun nullChecker(): String? = "Test" // null
 fun Tester.Division() = x.div(y)
 
 fun printValue(x: Int) =
-        if (x % 2 == 0)
-            1
-        else
-            0
+    if (x % 2 == 0)
+        1
+    else
+        0
 
 fun printValues(vararg a: Int) = a.reduce { x, e -> if (x < e) x else e }
 
