@@ -11,10 +11,9 @@ val chkVote: (Long) -> Unit = { x: Long ->
 var isRightToVote = "No"
 val yob: Long = 1990
 var age: Long = 1
+
 fun main() {
-
-
-    isRightToVote(yob.toLong(), chkVote)
+    isRightToVote(yob, chkVote)
     println("YOB is $yob, Eligibility Status to cast vote: $isRightToVote")
 
     /*isRightToVote(yob.toLong()) { x: Long ->
