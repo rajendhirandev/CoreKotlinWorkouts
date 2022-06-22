@@ -1,6 +1,10 @@
 import java.text.DateFormat
 import java.text.SimpleDateFormat
 import java.util.*
+import java.util.regex.Pattern
+import kotlin.properties.Delegates
+import kotlin.properties.ReadWriteProperty
+import kotlin.reflect.KProperty
 
 
 //@file:JvmName("Gurunath")
@@ -486,12 +490,12 @@ fun main(ar: Array<String>) {
     val formatted = formatter.format(d)
     println(formatted)*/
 
-    val xList = ArrayList<TestDataClass>()
-    xList.add(TestDataClass("3", "Test", arrayOf("UK", "PO"), isDone = false, pro = 50))
-    xList.add(TestDataClass("100", "Tez", arrayOf("DUB", "PO"), isDone = true, pro = 100))
-    xList.add(TestDataClass("4", "Tester", arrayOf("US", "US"), isDone = false, pro = 100))
-    xList.add(TestDataClass("6", "Testin", arrayOf("WI", "AU"), isDone = true, pro = 100))
-    xList.add(TestDataClass("2", "Testi", arrayOf("UK", "AU"), isDone = false, pro = 30))
+    /*  val xList = ArrayList<TestDataClass>()
+      xList.add(TestDataClass("3", "Test", arrayOf("UK", "PO"), isDone = false, pro = 50))
+      xList.add(TestDataClass("100", "Tez", arrayOf("DUB", "PO"), isDone = true, pro = 100))
+      xList.add(TestDataClass("4", "Tester", arrayOf("US", "US"), isDone = false, pro = 100))
+      xList.add(TestDataClass("6", "Testin", arrayOf("WI", "AU"), isDone = true, pro = 100))
+      xList.add(TestDataClass("2", "Testi", arrayOf("UK", "AU"), isDone = false, pro = 30))*/
 
     // 100, 6, 4, 3, 2
 
@@ -658,16 +662,373 @@ fun main(ar: Array<String>) {
        println("$property - $info")*/
 
 
-  /*  val diaLab = listOf(
-        Diagnosis("H1", "SH1"), Diagnosis("H1", "SH2"), Diagnosis("H2", "SH1"), Diagnosis("H2", "SH2")
-    )
-    val dataGroup = groupByParentName(diaLab)
+/*    val diaLab = listOf(
+        Diagnosis("D1", "Type1"),
+        Diagnosis("D1", "Type2"),
+        Diagnosis("D2", "Type1"),
+        Diagnosis("D2", "Type2"),
+        Diagnosis("D2", "Type3")
+    )*/
+    /*val dataGroup = groupByParentName(diaLab)
     dataGroup.forEach {
         println("Parent: ${it.key}")
         println("Items: \n${it.value listToStrWithSeparator "\n"}")
+    }*/
+    //test(diaLab, ::output, groupByParentName)
+
+    /*  val boardingList = listOf(
+          OnBoarding("1", "AAA", "Chennai", "Bang", "IT"),
+          OnBoarding("2", "BBB", "Bang", "Hyd", "IT"),
+          OnBoarding("3", "CCC", "Bang", "Chennai", "Finance"),
+          OnBoarding("4", "DDD", "Hyd", "Pune", "Finance"),
+          OnBoarding("5", "DDD", "Chennai", "Bang", "IT")
+      )*/
+    // Param either be 'it' or field references, both does the same job.
+    /* println(boardingList.groupBy({ it.baseLocation }, { it.eName }))
+     println(boardingList.groupBy(OnBoarding::baseLocation, OnBoarding::eName))
+
+     println(boardingList.associateBy({ it.baseLocation }, { it.eName }))
+     println(boardingList.associateBy(OnBoarding::baseLocation,OnBoarding::eName))*/
+
+
+    /*println(diaLab.groupBy({ it.heading },{it.subHeading}))
+    println(diaLab.groupBy(Diagnosis::heading, Diagnosis::subHeading))
+
+    println(diaLab.associateBy({ it.heading }, { it.subHeading }))
+    println(diaLab.associateBy(Diagnosis::heading, Diagnosis::subHeading))*/
+
+    /* val data = MyEmp(mapOf("eName" to "Rag", "eAge" to 23))
+     println(data.eAge)*/
+
+    /*  var acceptOnlyEven: Int by Delegates.vetoable(0) { property, prevStr, nextStr ->
+          nextStr.mod(2) == 0
+      }
+
+      var allowNonEmptyText: String by Delegates.vetoable("NA") { property, oldValue, newValue ->
+          newValue.isNotEmpty()
+      }
+
+      var acceptStatus: String by Delegates.vetoable(STATUS_START) { property, oldValue, newValue ->
+          listOf(STATUS_START, STATUS_INPROGRESS, STATUS_DONE).contains(newValue)
+      }
+
+      println("Str: $acceptStatus")
+      acceptStatus = "Status"
+      println("Str: $acceptStatus")
+      acceptStatus = ""
+      println("Str: $acceptStatus")
+      acceptStatus = "DonE"
+      println("Str: $acceptStatus")
+      acceptStatus = "Done"
+      println("Str: $acceptStatus")
+
+      println("Value: $acceptOnlyEven")
+      acceptOnlyEven = 10
+      println("Value: $acceptOnlyEven")
+      acceptOnlyEven = 5
+      println("Value: $acceptOnlyEven")
+
+      println("Str: $allowNonEmptyText")
+      allowNonEmptyText = "Status"
+      println("Str: $allowNonEmptyText")
+      allowNonEmptyText = ""
+      println("Str: $allowNonEmptyText")*/
+
+    /*  val xMaple = Example()
+      println(xMaple.p)
+      xMaple.p = "Te"
+      println(xMaple.p)
+
+      xMaple.test()*/
+
+    /*  val items = listOf("AAA", "BBB", "CCC", "DDD")
+      val itemMap = mutableMapOf("x" to "AAA", "y" to "BBB")
+
+      val header = listOf(
+          Header("Heading1", "SubHeading1"), Header("Heading2", "SubHeading2")
+      )
+
+      println("Item at index 2 ${items.getOrElse(2) { "NA" }}")
+      println("Item at index 4 ${items.getOrElse(4) { "NA" }}")
+      println("Header at index 1 ${header.getOrElse(1) { "NA" }}")
+      println("Header at index 2 ${header.getOrElse(2) { "NA" }}")
+
+      println("Map Data: $itemMap")
+      println("Map Key x ${itemMap.getOrElse("x") { "NA" }}")
+      println("Map Key z ${itemMap.getOrElse("z") { "NA" }}")
+
+      println("Map Key x ${itemMap.getOrPut("x") { "XXX" }}")
+      println("Map Key z ${itemMap.getOrPut("z") { "ZZZ" }}")
+
+      // Remove Map Key "x"
+      itemMap.remove("x")
+
+      println("Refreshed Map Data: $itemMap")
+      println("Map Key x ${itemMap.getOrPut("x") { "AAA" }}")
+      println("Refreshed Map Data: $itemMap")*/
+
+    /* val users = listOf("AAA", "aaa", "BBB", "bbb", "CCC", "ccc", "AAA", "aaa", "BBB", "bbb", "CCC", "ccc")
+     val tezUsers = listOf(
+         Tez("AAA"),
+         Tez("aaa"),
+         Tez("BBB"),
+         Tez("bbb"),
+         Tez("CCC"),
+         Tez("ccc"),
+         Tez("AAA"),
+         Tez("aaa"),
+         Tez("BBB"),
+         Tez("bbb"),
+         Tez("CCC"),
+         Tez("ccc")
+     )
+     println("toSet: ${users.toSet()}")
+     println("Data Object toSet: ${tezUsers.toSet()}")
+     println("distinct : ${users.distinct()}")
+     println("Data object distinct: ${tezUsers.distinct()}")
+     println("distinctBy: ${users.distinctBy { it.lowercase() }}")
+     println("Data object distinctBy: ${tezUsers.distinctBy { it.id.lowercase() }}")
+
+     val revUsers = users.reversed()
+     val revTezUsers = tezUsers.reversed()
+     println("\n\nreversed toSet: ${revUsers.toSet()}")
+     println("reversed Data object toSet: ${revTezUsers.toSet()}")
+     println("reversed Distinct : ${revUsers.distinct()}")
+     println("reversed Data object distinct: ${revTezUsers.distinct()}")
+     println("reversed object distinctBy: ${revUsers.distinctBy { it.lowercase() }}")
+     println("reversed Data object distinctBy: ${revTezUsers.distinctBy { it.id.lowercase() }}")*/
+
+    /*println("This is a nice learning".filterNot { it.isWhitespace() }.toList())
+    println("p+1&O02-90-23-ui-67".partition { it.isLetterOrDigit() })
+    println("the qUick bRown fOx".capitalizeWord())*/
+
+    /*val tez1Users = listOf(
+        Tez1(id = "AAA"),
+        Tez1(id = "aaa"),
+        Tez1(id = "BBB"),
+        Tez1(id = "bbb"),
+        Tez1(id = "CCC"),
+        Tez1(id = "ccc"),
+        Tez1(id = "AAA"),
+        Tez1(id = "aaa"),
+        Tez1(id = "BBB"),
+        Tez1(id = "bbb"),
+        Tez1(id = "CCC"),
+        Tez1(id = "ccc")
+    )
+    println(tez1Users.toSet())
+    val addrObj = listOf(
+        addr("Chennai", "Tnagar", 122),
+        addr("Chennai", "Tnagar", 122),
+        addr("Chennai", "Saidapet", 542),
+        addr("Chennai", "Saidapet", 542),
+        addr("Pondy", "Mission St", 122),
+        addr("Chennai", "Mission St", 542),
+        addr("Chennai", "Mission St", 542),
+        addr("Pondy", "Saidapet", 334)
+    )
+    println(addrObj.toSet())*/
+
+    /* return Pattern.compile("\\b(.)(.*?)\\b")
+         .matcher(str)
+         .replaceAll(match -> match.group(1).toUpperCase() + match.group(2));*/
+
+    /*  val ms = measureTimeMillis {
+          val strD = "thE QuIck bROwN FOx"  //\\b(.)(.*?)\\b  //\\b(\\w) //https://www.techiedelight.com/capitalize-each-word-of-a-string-in-kotlin/
+          val strCa = Pattern.compile("\\b(\\w)").matcher(strD.lowercase())?.replaceAll {
+              println("match result: $it")
+              println("Grp: ${it.group()}")
+              println("Grp0: ${it.group(0)}")
+              println("Grp1: ${it.group(1)}")
+              println("GrpS: ${it.start()}")
+              println("GrpE: ${it.end()}")
+              println("GrpC: ${it.groupCount()}")
+              it.group(1).replaceFirstChar { a -> a.titlecase() }
+          }
+          println(strCa)
+          val sb = StringBuffer()
+          val strCa1 = Pattern.compile("\\b(\\w)").matcher(strD.lowercase())
+          while (strCa1.find()){
+              strCa1.appendReplacement(sb,strCa1.group(1).uppercase())
+          }
+          strCa1.appendTail(sb)
+          println(sb)
+      }
+      println("Time Spent: $ms")*/
+
+    //val ms1 = measureTimeMillis {
+    /*  val strD = "thE QuIck    bROwN   FOx"
+      println("thE QuIck    bROwN   FOx".capitalizeWord())
+      println("thE qUiCk bRown FoX".capitalizeWord())*/
+/*
+    //println(::add.invoke(10,20))
+    for ((ind,v) in listOf(12,25,215,3,52).withIndex()){
+        println("$ind $v")
     }
-    test(diaLab, ::output, groupByParentName)*/
+    */
+    /* val myValues = listOf(12, 25, 215, 3, 52)
+     println("All Values: $myValues")
+     println("Even Filter ${myValues.filter { it % 2 == 0 }} -- Simple implicit lambda")
+     println("Odd Filter ${myValues.filter { oddFilter(it) }} -- lambda reference as param")
+     println("odd Filter ${myValues.filter(oddFilter)} -- lambda as param to filter function")
+     println("Even Filter ${myValues.filter(::evenFilter)} -- function reference as param")*/
+
+    /*myCalc(10, 20, add, outs)
+    myCalc(10, 20, ::minus, outs)*/
+
+    val table1 = Orders("NutsTbl")
+    val table2 = Orders("FruitsTbl")
+    table2.deliverOrders(Flavours.NUTS_CREAM)
+    table1.deliverOrders(Flavours.COOKIES_CREAM)
 }
+
+class Orders(private val tableName: String) {
+    fun deliverOrders(flavorType: Flavours) {
+        val item = PrepareIceCream().prepareNProvide(flavorType)
+        println("$tableName is delivered with ${item.flavorType}")
+    }
+}
+
+data class IceCream(val flavorType: Flavours)
+class PrepareIceCream {
+    fun prepareNProvide(flavorType: Flavours): IceCream {
+        return IceCream(flavorType)
+    }
+}
+
+enum class Flavours(val readyDelay: Long) {
+    VANILLA(3000L),
+    CHOCOLATE(5000L),
+    COOKIES_CREAM(1000L),
+    NUTS_CREAM(7000L);
+}
+
+inline fun myCalc(a: Int, b: Int, noinline call: (Int, Int) -> Pair<Int, String>, out: (Int, String) -> String) {
+    println("I'm in myCalc start")
+    val (c, d) = call(a, b)
+    println(out(c, d))
+    println("I'm in myCalc end")
+}
+
+val add = { a: Int, b: Int -> Pair(a.plus(b), "Addition") }
+fun minus(a: Int, b: Int) = Pair(a.minus(b), "Subtraction")
+
+val sub = { a: Int, b: Int -> Pair(a.minus(b), "Subtraction") }
+val mul = { a: Int, b: Int -> Pair(a * b, "Multiply") }
+
+
+val outs: (Int, String) -> String = { a, b -> "$b Output: $a" }
+
+val oddFilter = { a: Int -> a % 2 != 0 }
+fun evenFilter(g: Int): Boolean = g % 2 == 0
+
+
+fun add(a: Int, b: Int): Int {
+    return a + b
+}
+
+fun String.capitalizeWordPattern(): String {
+    /* Pattern.compile("\\b(\\w)").matcher(lowercase()).replaceAll {
+         it.group(1).replaceFirstChar { a -> a.titlecase() }
+     }*/
+
+    val sb = StringBuffer()
+    val strCa1 = Pattern.compile("\\b(\\w)").matcher(lowercase().trim())
+    while (strCa1.find()) {
+        strCa1.appendReplacement(sb, strCa1.group(1).uppercase())
+    }
+    strCa1.appendTail(sb)
+    return sb.toString()
+}
+
+fun String.capitalizeWord() = lowercase()
+    .split("\\s+".toRegex())
+    .joinToString(" ") {
+        it.trim().replaceFirstChar(Char::titlecase)
+    }
+
+data class addr(val state: String, val city: String, val dNo: Int)
+data class Tez(val id: String)
+
+data class Tez1(val sal: Int = 0, val id: String = "") {
+    var name = "Test"
+}
+
+
+data class Header(val heading: String, val subHeading: String)
+
+const val STATUS_START = "Start"
+const val STATUS_INPROGRESS = "InProgress"
+const val STATUS_DONE = "Done"
+
+class Example {
+    var p: String by StatusDelegate()
+
+    /* var pStr by DataDelegate<String>()
+     var pInt by DataDelegate<Int>()
+     var pObj by DataDelegate<List<Diagnosis>>()*/
+    var pStr by MyDelegate<String>()
+    var pInt by MyDelegate<Int>()
+    var pObj by MyDelegate<List<Diagnosis>>()
+
+    init {
+        testSet()
+    }
+
+    private fun testSet() {
+        pObj = listOf(
+            Diagnosis("Heading1", "SubHeading1"), Diagnosis("Heading2", "SubHeading2")
+        )
+    }
+
+    fun test() {
+        pObj?.map {
+            println("${it.heading} || ${it.subHeading}")
+        }
+    }
+}
+
+class DataDelegate<T>(private var dataum: T? = null) {
+    operator fun getValue(thisRef: Any, prop: KProperty<*>) = dataum
+
+    operator fun setValue(thisRef: Any, prop: KProperty<*>, value: T?) {
+        dataum = value
+    }
+}
+
+class MyDelegate<T> : ReadWriteProperty<Any, T?> {
+    private var value: T? = null
+    override fun getValue(thisRef: Any, property: KProperty<*>) = value
+
+    override fun setValue(thisRef: Any, property: KProperty<*>, value: T?) {
+        this.value = value
+    }
+
+}
+
+class StatusDelegate(private var str: String = "") {
+    operator fun getValue(thisRef: Any?, prop: KProperty<*>): String {
+        return str
+    }
+
+    operator fun setValue(thisRef: Any, prop: KProperty<*>, value: String) {
+        str = value
+    }
+}
+
+var yVal: Int = 0
+var xVal by Delegates.notNull<Int>()
+var n by Delegates.notNull<String>()
+
+class MyEmp(myMap: Map<String, Any?>) {
+    val eName: String by myMap
+    val eAge: Long by myMap
+}
+
+data class OnBoarding(
+    val eId: String, val eName: String, val baseLocation: String, val placedLocation: String, val deptCode: String
+)
+
 
 inline fun test(
     data: List<Diagnosis>,
@@ -702,21 +1063,17 @@ data.forEach {
 // }
 println("Done")*/
 
-fun getCurrentTimeStamp() =
-    SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'").format(Calendar.getInstance().time)
+fun getCurrentTimeStamp() = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'").format(Calendar.getInstance().time)
 
 const val ISO_DATE_TIME_FORMAT_1 = "yyyy-MM-dd'T'HH:mm:ss'Z'"
 const val ISO_DATE_TIME_FORMAT_2 = "YYYY-MM-DD'T'hh:mm:ss'TZD'"
 
 fun getCurrentDateUTC(
-    timeZoneValue: String = "UTC",
-    format: String = ISO_DATE_TIME_FORMAT_1,
-    locale: Locale = Locale.US
+    timeZoneValue: String = "UTC", format: String = ISO_DATE_TIME_FORMAT_1, locale: Locale = Locale.US
 ): String? {
     var result: String? = null
     try {
-        val mISODateTimeFormatted: DateFormat =
-            SimpleDateFormat(format, locale)
+        val mISODateTimeFormatted: DateFormat = SimpleDateFormat(format, locale)
         mISODateTimeFormatted.timeZone = TimeZone.getTimeZone(timeZoneValue)
         result = mISODateTimeFormatted.format(Date())
     } catch (e: Exception) {
@@ -801,11 +1158,8 @@ fun nullChecker(): String? = "Test" // null
 
 fun Tester.Division() = x.div(y)
 
-fun printValue(x: Int) =
-    if (x % 2 == 0)
-        1
-    else
-        0
+fun printValue(x: Int) = if (x % 2 == 0) 1
+else 0
 
 fun printValues(vararg a: Int) = a.reduce { x, e -> if (x < e) x else e }
 
