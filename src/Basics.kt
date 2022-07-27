@@ -876,10 +876,12 @@ fun main(ar: Array<String>) {
     /*myCalc(10, 20, add, outs)
     myCalc(10, 20, ::minus, outs)*/
 
-    val table1 = Orders("NutsTbl")
+  /*  val table1 = Orders("NutsTbl")
     val table2 = Orders("FruitsTbl")
     table2.deliverOrders(Flavours.NUTS_CREAM)
-    table1.deliverOrders(Flavours.COOKIES_CREAM)
+    table1.deliverOrders(Flavours.COOKIES_CREAM)*/
+
+    //test()
 }
 
 class Orders(private val tableName: String) {
@@ -1189,8 +1191,12 @@ infix fun String.toConcat(x: String): String {
     return "$this $x"
 }
 
+fun test() {
+    Gh() printStr "Test"
+}
+
 class Gh {
-    fun printStr(x: String) {
+    infix fun printStr(x: String) {
         println(x)
     }
 
