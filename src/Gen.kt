@@ -128,6 +128,11 @@ interface ConsumeInput<in T> {
     fun consumeContent(data: T)
 }
 
+interface ProduceInter<out X, in Y> {
+    fun getIntern(): X
+    fun setIntern(ite: Y)
+}
+
 open class WordProcessor(val content: String, val isStyle: Boolean = false, val isAnimated: Boolean = false) {
     fun show() {
         println("Type : $content | Style: $isStyle | Animation: $isAnimated")

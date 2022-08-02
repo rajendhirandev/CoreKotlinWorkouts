@@ -876,12 +876,48 @@ fun main(ar: Array<String>) {
     /*myCalc(10, 20, add, outs)
     myCalc(10, 20, ::minus, outs)*/
 
-  /*  val table1 = Orders("NutsTbl")
-    val table2 = Orders("FruitsTbl")
-    table2.deliverOrders(Flavours.NUTS_CREAM)
-    table1.deliverOrders(Flavours.COOKIES_CREAM)*/
+    /*  val table1 = Orders("NutsTbl")
+      val table2 = Orders("FruitsTbl")
+      table2.deliverOrders(Flavours.NUTS_CREAM)
+      table1.deliverOrders(Flavours.COOKIES_CREAM)*/
 
     //test()
+
+
+    val flav1 = Flavours.COOKIES_CREAM
+    flav1.brand="Arun"
+    val flav2 = Flavours.COOKIES_CREAM
+    flav2.brand="Ponlait"
+    println(flav2.discount(3.5))
+    println("${flav1.name} | ${flav1.brand}")
+    println("${flav2.name} | ${flav2.brand}")
+}
+
+enum class Flavours(val readyDelay: Long) {
+    VANILLA(3000L) {
+        override fun discount(amt: Double):String {
+            return ""
+        }
+    },
+    CHOCOLATE(5000L) {
+        override fun discount(amt: Double) :String {
+            return ""
+        }
+    },
+    COOKIES_CREAM(1000L) {
+        override fun discount(amt: Double) :String {
+            return "Discount is $amt"
+        }
+    },
+    NUTS_CREAM(7000L) {
+        override fun discount(amt: Double) :String {
+            return ""
+        }
+    };
+
+    var brand: String = "Amul"
+
+    abstract fun discount(amt:Double):String
 }
 
 class Orders(private val tableName: String) {
@@ -898,12 +934,7 @@ class PrepareIceCream {
     }
 }
 
-enum class Flavours(val readyDelay: Long) {
-    VANILLA(3000L),
-    CHOCOLATE(5000L),
-    COOKIES_CREAM(1000L),
-    NUTS_CREAM(7000L);
-}
+
 
 inline fun myCalc(a: Int, b: Int, noinline call: (Int, Int) -> Pair<Int, String>, out: (Int, String) -> String) {
     println("I'm in myCalc start")
