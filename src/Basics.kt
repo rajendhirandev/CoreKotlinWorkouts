@@ -376,10 +376,10 @@ fun main(ar: Array<String>) {
     xList.forEach { println(it) }*/
 
 
-/*    xList.sortWith(ComparatorOne().thenBy { it.id.equals("100") })
-    xList.forEach {
-        println(it)
-    }*/
+    /*    xList.sortWith(ComparatorOne().thenBy { it.id.equals("100") })
+        xList.forEach {
+            println(it)
+        }*/
 
     /*val xVa= xList.sortedBy { it.pos || it.id.equals("100") }
     xVa.forEach {
@@ -662,13 +662,13 @@ fun main(ar: Array<String>) {
        println("$property - $info")*/
 
 
-/*    val diaLab = listOf(
-        Diagnosis("D1", "Type1"),
-        Diagnosis("D1", "Type2"),
-        Diagnosis("D2", "Type1"),
-        Diagnosis("D2", "Type2"),
-        Diagnosis("D2", "Type3")
-    )*/
+    /*    val diaLab = listOf(
+            Diagnosis("D1", "Type1"),
+            Diagnosis("D1", "Type2"),
+            Diagnosis("D2", "Type1"),
+            Diagnosis("D2", "Type2"),
+            Diagnosis("D2", "Type3")
+        )*/
     /*val dataGroup = groupByParentName(diaLab)
     dataGroup.forEach {
         println("Parent: ${it.key}")
@@ -860,12 +860,12 @@ fun main(ar: Array<String>) {
     /*  val strD = "thE QuIck    bROwN   FOx"
       println("thE QuIck    bROwN   FOx".capitalizeWord())
       println("thE qUiCk bRown FoX".capitalizeWord())*/
-/*
-    //println(::add.invoke(10,20))
-    for ((ind,v) in listOf(12,25,215,3,52).withIndex()){
-        println("$ind $v")
-    }
-    */
+    /*
+        //println(::add.invoke(10,20))
+        for ((ind,v) in listOf(12,25,215,3,52).withIndex()){
+            println("$ind $v")
+        }
+        */
     /* val myValues = listOf(12, 25, 215, 3, 52)
      println("All Values: $myValues")
      println("Even Filter ${myValues.filter { it % 2 == 0 }} -- Simple implicit lambda")
@@ -884,41 +884,82 @@ fun main(ar: Array<String>) {
     //test()
 
 
-    val flav1 = Flavours.COOKIES_CREAM
-    flav1.brand="Arun"
+    /*val flav1 = Flavours.COOKIES_CREAM
+    flav1.brand = "Arun"
     val flav2 = Flavours.COOKIES_CREAM
-    flav2.brand="Ponlait"
-    println(flav2.discount(3.5))
-    println("${flav1.name} | ${flav1.brand}")
-    println("${flav2.name} | ${flav2.brand}")
+    flav2.brand = "Ponlait"
+
+    val flav3 = Flavours.CHOCOLATE
+    flav3.brand = "Vadilal"
+
+    println("${flav1.name} | ${flav1.brand} | ${flav1.discount(7.5)}")
+    println("${flav2.name} | ${flav2.brand} | ${flav2.discount(2.5)}")
+    println("${flav3.name} | ${flav3.brand} | ${flav3.discount(3.5)}")*/
+
+    getMyFlavor(Chocolate(3000L, 10.50))
+    getMyFlavor(CookieCream(3000L, 10.50, true))
+    getMyFlavor(Vanilla(3000L))
 }
 
-enum class Flavours(val readyDelay: Long) {
+/*
+* https://blog.kotlin-academy.com/enum-vs-sealed-class-which-one-to-choose-dc92ce7a4df5
+* https://blog.devgenius.io/sealed-classes-vs-enum-classes-274a0b19cde0
+* https://tedblob.com/kotlin-sealed-class-vs-enum-differences/
+* https://jesmanto.medium.com/difference-between-enum-and-sealed-classes-in-kotlin-304e325bb6cc
+* */
+sealed class Flavours(val preparationTime: Long)
+class Vanilla(preparationTime: Long) : Flavours(preparationTime) {
+    fun getCreamType() {
+        println("Inside Vanilla")
+    }
+}
+
+class Chocolate(preparationTime: Long, val isDiscount: Double) : Flavours(preparationTime) {
+    fun knowChocolateType() {
+        println("Inside Chocolate")
+    }
+}
+
+class CookieCream(preparationTime: Long, val isDiscount: Double, val isSmokey: Boolean) : Flavours(preparationTime) {
+    fun getCookieType() {
+        println("Inside Cookie")
+    }
+}
+
+fun getMyFlavor(flavorType: Flavours) = when (flavorType) {
+    is Chocolate -> {
+        flavorType.knowChocolateType()
+    }
+
+    is CookieCream -> {
+        flavorType.getCookieType()
+    }
+
+    is Vanilla -> {
+        flavorType.getCreamType()
+    }
+}
+
+/*enum class Flavours(val preparationTime: Long) {
     VANILLA(3000L) {
-        override fun discount(amt: Double):String {
+        override fun discount(amt: Double): String {
             return ""
         }
     },
     CHOCOLATE(5000L) {
-        override fun discount(amt: Double) :String {
-            return ""
-        }
-    },
-    COOKIES_CREAM(1000L) {
-        override fun discount(amt: Double) :String {
+        override fun discount(amt: Double): String {
             return "Discount is $amt"
         }
     },
-    NUTS_CREAM(7000L) {
-        override fun discount(amt: Double) :String {
-            return ""
+    COOKIES_CREAM(1000L) {
+        override fun discount(amt: Double): String {
+            return "Discount is $amt"
         }
     };
 
     var brand: String = "Amul"
-
-    abstract fun discount(amt:Double):String
-}
+    abstract fun discount(amt: Double): String
+}*/
 
 class Orders(private val tableName: String) {
     fun deliverOrders(flavorType: Flavours) {
@@ -933,7 +974,6 @@ class PrepareIceCream {
         return IceCream(flavorType)
     }
 }
-
 
 
 inline fun myCalc(a: Int, b: Int, noinline call: (Int, Int) -> Pair<Int, String>, out: (Int, String) -> String) {
