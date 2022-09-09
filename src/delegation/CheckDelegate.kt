@@ -19,6 +19,34 @@ fun main() {
         onLoad()
         println("ImageLoad: $loaderName")
     }
+
+    ImagesTest().tester()
+
+  /*  println(PaymentProcess(CashPayment()).process())
+    PaymentProcess.isUPIDown = true
+    println(PaymentProcess(UPIPayment("Tez")).process())
+    PaymentProcess.isUPIDown = false
+    println(PaymentProcess(UPIPayment("Paytm")).process())
+    PaymentProcess.isCardDown = true
+    println(PaymentProcess(CardPayment("HDFC", "CC")).process())
+    PaymentProcess.isCardDown = false
+    println(PaymentProcess(CardPayment("Citi")).process())*/
+}
+
+interface ImgDecode {
+    fun parse(bitmap: Any)
+}
+
+class GIFDecoder : ImgDecode {
+    override fun parse(bitmap: Any) {
+        println("Decoder GIF Image")
+    }
+}
+
+class PNGDecoder : ImgDecode {
+    override fun parse(bitmap: Any) {
+        println("Decoder PNG Image")
+    }
 }
 
 interface ImgSrcLoader {
@@ -53,6 +81,16 @@ class CoilImpl(private val url: String, private val view: Any) : ImgSrcLoader {
     }
 }
 
+class ImagesTest : ImgSrcLoader by CoilImpl("", ""), ImgDecode by PNGDecoder() {
+
+    fun tester() {
+        onLoad()
+        transition()
+        parse("")
+    }
+
+}
+
 class ImageLoad(private val iLoader: ImgSrcLoader) : ImgSrcLoader by iLoader {
     /* This property change will not reflect/accessed on
      the super class implementations.*/
@@ -85,3 +123,53 @@ class BaseImplLegacy(val x: Int) : Base {
 }
 
 class Derived(b: Base) : Base by b*/
+
+/*interface IPayment {
+    fun paymentMode(): String
+}
+
+class CashPayment : IPayment {
+    override fun paymentMode(): String {
+        return "Cash"
+    }
+}
+
+class UPIPayment(val upiName: String) : IPayment {
+    override fun paymentMode(): String {
+        return "UPI - $upiName"
+    }
+}
+
+class CardPayment(val providerName: String, val cardType: String = "DC") : IPayment {
+    override fun paymentMode(): String {
+        return "Card-$providerName-$cardType"
+    }
+}
+
+const val PROCESSING_ERROR_MSG = "Sorry we can't process it for now with "
+const val PROCESSING_MSG = "Process Initiated for "
+
+class PaymentProcess(val iPayment: IPayment) : IPayment by iPayment {
+    companion object {
+        var isCardDown: Boolean = false
+        var isUPIDown: Boolean = false
+    }
+
+    *//*fun processPayment(): String {
+        val paymentMode = iPayment.paymentMode()
+        return if (iPayment !is CashPayment && (isUPIDown || isCardDown)) {
+            "$PROCESSING_ERROR_MSG $paymentMode"
+        } else {
+            "$PROCESSING_MSG $paymentMode"
+        }
+    }*//*
+}
+
+fun PaymentProcess.process(): String {
+    val paymentMode = this.paymentMode()
+    return if (this.iPayment !is CashPayment && (PaymentProcess.isUPIDown || PaymentProcess.isCardDown)) {
+        "$PROCESSING_ERROR_MSG $paymentMode"
+    } else {
+        "$PROCESSING_MSG $paymentMode"
+    }
+}*/
