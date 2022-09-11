@@ -19,14 +19,14 @@ interface IPayment {
     String paymentMode();
 }
 
-class CashPayment implements IPayment {
+final class CashPayment implements IPayment {
     @Override
     public String paymentMode() {
         return "Cash";
     }
 }
 
-class UPIPayment implements IPayment {
+final class UPIPayment implements IPayment {
     String upiName;
 
     public UPIPayment(String upiName) {
@@ -39,7 +39,7 @@ class UPIPayment implements IPayment {
     }
 }
 
-class CardPayment implements IPayment {
+final class CardPayment implements IPayment {
     String providerName, cardType;
 
     CardPayment(String providerName, String cardType) {
